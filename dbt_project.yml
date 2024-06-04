@@ -1,0 +1,22 @@
+name: 'sandbox'
+
+# version from this yaml is loaded by packaging/setup.py during packaging
+version: '1.0.0'
+
+require-dbt-version: [">=0.21.0", "<=1.8.1"]
+
+config-version: 2
+
+profile: 'bq-oauth'
+
+target-path: "target"
+clean-targets: ["target", "dbt_modules"]
+macro-paths: ["macros"]
+log-path: "logs"
+test-paths: ["tests"]
+
+# config for snowflake, could be potentially move to a model base?
+vars:
+  catalog_iceberg: 'SNOWFLAKE'
+  external_volume_iceberg: "{{env_var('snowflake_external_volume')}}"
+  storage_base_url_iceberg: "{{env_var('snowflake_url_s3_bucket')}}"

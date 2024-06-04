@@ -1,0 +1,12 @@
+
+version: 2
+
+models:
+  - name: my_second_dbt_model
+    description: "A starter dbt model"
+    columns:
+      - name: L_RETURNFLAG
+        description: "flag return"
+        data_tests:
+          - unique
+          - not_null

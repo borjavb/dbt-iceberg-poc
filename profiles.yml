@@ -1,0 +1,27 @@
+config:
+  use_colors: True # change this to test if config is loading
+  send_anonymous_usage_stats: False # can't be making external connections from internal systems
+  printer_width: 160 # default 80
+
+bq-oauth:
+  target: testing # default target
+  outputs:
+    duckdb:
+      extensions:
+       - iceberg
+      type: duckdb
+      path: localiceberg.duckdb
+      settings:
+        s3_region: eu-north-1
+        s3_access_key_id: "{{env_var('s3_access_key_id')}}"
+        s3_secret_access_key: "{{env_var('s3_secret_access_key')}}"
+    snowflake:
+      type: snowflake
+      account: "{{env_var('snowflake_account')}}"
+      user: "{{env_var('snowflake_user')}}"
+      password: "{{env_var('snowflake_user_password')}}"
+      role: "{{env_var('snowflake_user_role')}}"
+      database: snowflakeinceberg_test
+      warehouse: snowflakeinceberg_test_wh
+      schema: public
+      threads: 200
