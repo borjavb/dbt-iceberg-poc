@@ -4,6 +4,10 @@
 
 This is a  proof of concept on how to use dbt with iceberg to run a multi-stack environment.
 
+### running the models with snowflake creating iceberg tables
+![image](run.png)
+### running the tests with duckdb against the tables in iceberg
+![image](test.png)
 This example uses Snowflake as the main engine to create iceberg tables and duckdb as a secondary engine to run tests.
 
 For now, Snowflake only offers a catalog where only Snowflake can write, but any other engines can read. With Polaris this will change tho!.
