@@ -29,6 +29,7 @@
 
     {%- set catalog = var('catalog_iceberg') -%}
     {%- set external_volume = var('external_volume_iceberg') -%}
+    {%- set polaris_catalog_sync = var('polaris_catalog_sync') -%}
     {%- set base_location = relation.identifier -%}
 
 
@@ -45,6 +46,9 @@
           CATALOG="{{ catalog }}",
           EXTERNAL_VOLUME="{{ external_volume }}",
           BASE_LOCATION="{{ base_location }}"
+          {% if polaris_catalog_sync %}
+            CATALOG_SYNC = "{{ polaris_catalog_sync }}"
+          {% endif %}  
         {% endif %}  
         {% if copy_grants and not temporary -%} copy grants {%- endif %} as
         (

@@ -1,6 +1,6 @@
 # Multistack dbt and iceberg
 
-![image](sandbox.png)
+![image](polaris.png)
 
 This is a  proof of concept on how to use dbt with iceberg to run a multi-stack environment.
 
@@ -12,6 +12,13 @@ This example uses Snowflake as the main engine to create iceberg tables and duck
 
 For now, Snowflake only offers a catalog where only Snowflake can write, but any other engines can read. With Polaris this will change tho!.
 
+# Snowflake and iceberg :(
+    
+With the new bundle 2024_05 Snowflake no longer generates the version-hint.text file [bundle](https://docs.snowflake.com/en/release-notes/bcr-bundles/2024_05/bcr-1658).
+You can disable this bundle temporarely to make this work with duckdb
+```sql
+    SELECT SYSTEM$DISABLE_BEHAVIOR_CHANGE_BUNDLE('2024_05');
+```
 
 # Extending dbt to work with Iceberg
  - Modify the create table adaptor for snowflake to write in Iceberg format
@@ -28,6 +35,8 @@ Now, depending on the target, we will be able to access exactly the same data, b
 
 This is just a proof of concept that it's possible to have dbt working as a multi-stack transformation layer. A lot of decisions/code could have been done in a different way.
 
+
+
 # How to get it running:
 
 * Create a bucket you can use externally (GCS, S3...)
@@ -39,8 +48,16 @@ This is just a proof of concept that it's possible to have dbt working as a mult
             external_volume_iceberg: 'my-external-volume-in-snowflake' # volume name you just created in snowflake
             storage_base_url_iceberg: 's3://my-bucket/iceberg' # storage url used as base for accessing through duckdb directly as for now we can't have access to a catalog. This property could probably be dynamic based on models and not global.
     ```
+
 * Configure your dbt profiles.yml by adding the credentials to connect to snowflake and duckdb, there's an example in this project.
 * Profit
+
+# Extending dbt to work with Polaris
+If you want to use Polaris, [follow this tutorial to create a polaris catalog integration](https://other-docs.snowflake.com/polaris/tutorials/polaris-gs#use-case-create-table-using-apache-spark). Then, update the following vars in your dbt_project.yml:
+```yml
+    vars:
+        polaris_catalog_sync: 'polaris_catalog_sync' # the polaris catalog name you set when creating the `CREATE OR REPLACE CATALOG INTEGRATION <polaris_catalog_sync>`
+```
 
 # Run dbt
 
