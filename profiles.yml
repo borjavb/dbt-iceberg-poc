@@ -25,3 +25,9 @@ bq-oauth:
       warehouse: snowflakeinceberg_test_wh
       schema: public
       threads: 200
+    bigquery:
+      type: bigquery
+      method: oauth
+      project: "{{env_var('bigquery_project')}}"
+      dataset: "{{env_var('bigquery_dataset')}}" 
+      threads: 4 # Must be a value of 1 or greater 

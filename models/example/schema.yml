@@ -10,3 +10,11 @@ models:
         data_tests:
           - unique
           - not_null
+  - name: my_fourth_dbt_model
+    description: "A starter dbt model"
+    columns:
+      - name: word
+        description: "flag return"
+        data_tests:
+          - unique
+          - not_null

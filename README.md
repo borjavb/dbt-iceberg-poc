@@ -1,6 +1,14 @@
 # Multistack dbt and iceberg
 
+
+# Multistack with polaris
 ![image](polaris.png)
+
+# Multistack with bigquery
+![image](bigquery.png)
+
+# Multistack with bigquery as main writer
+![image](sno-bq.png)
 
 This is a  proof of concept on how to use dbt with iceberg to run a multi-stack environment.
 
